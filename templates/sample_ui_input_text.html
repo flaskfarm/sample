@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+  <nav>  
+    {{ macros.m_tab_head_start() }}
+      {{ macros.m_tab_head2('setting_input_text', 'setting_input_text', true) }}
+      {{ macros.m_tab_head2('setting_input_text_and_buttons', 'setting_input_text_and_buttons', false) }}
+    {{ macros.m_tab_head_end() }}
+  </nav>  
+  
+  <div class="tab-content" id="nav-tabContent">
+    {{ macros.m_tab_content_start('setting_input_text', true) }}
+      {{ macros.info_text('id1', '함수', "setting_input_text(id, left, value='', col='9', placeholder='', desc='', type='text', disabled=False)") }}
+      {{ macros.m_hr() }}
+
+      {{ macros.info_text('id1', '코드', "macros.setting_input_text('id1', '결과', value='초기값')") }}
+      {{ macros.setting_input_text('id1', '결과', value='초기값') }}
+      {{ macros.m_hr() }}
+
+      {{ macros.info_text('id1', '코드', "macros.setting_input_text('id1', '결과', value='초기값', col='3')", desc="col 값으로 width 변경") }}
+      {{ macros.setting_input_text('id1', '결과', value='초기값', col='3' ) }}
+      {{ macros.m_hr() }}
+
+      {{ macros.info_text('id1', '코드', "macros.setting_input_text('id1', '결과', value='초기값', disabled=True)", desc=['disabled=True 로 입력 불가 설정']) }}
+      {{ macros.setting_input_text('id1', '결과', value='초기값', disabled=True) }}
+      {{ macros.m_hr() }}
+
+      {{ macros.info_text('id1', '코드', "macros.setting_input_text('id1', '결과', value='', placeholder='값을 입력하세요')", desc=['placeholder 기능.']) }}
+      {{ macros.setting_input_text('id1', '결과', value='', placeholder='값을 입력하세요') }}
+      {{ macros.m_hr() }}
+    {{ macros.m_tab_content_end() }}   
+
+
+    {{ macros.m_tab_content_start('setting_input_text_and_buttons', false) }}
+      {{ macros.info_text('id1', '함수', "setting_input_text_and_buttons(id, left, buttons, value='', col='9', placeholder='', desc='', type='text', disabled=False)", desc=[
+      'setting_input_text 함수에 buttons 추가',
+      "buttons는 array이며 [id, 표시이름] 혹은 [id, 표시이름,[(key,value) array"]
+      ) }}
+      {{ macros.m_hr() }}
+
+      {{ macros.info_text('id1', '코드', "macros.setting_input_text_and_buttons('myid', '결과', [['mybtn', '클릭']], value='123456789')") }}
+      {{ macros.setting_input_text_and_buttons('myid', '결과', [['mybtn', '클릭']], value='123456789') }}
+
+      <div class='row'><div class='col-sm-3 set-left'></div><div class='col-sm-9'><div style="padding-left:20px; padding-top:-5px;">
+        클릭 처리 javascript 코드</br>
+        <pre>
+
+          $("body").on('click', '#mybtn', function(e){
+            e.preventDefault();
+            notify("입력값은 " + $("#myid").val() + "입니다");
+          });
+        </pre>
+      </div></div></div>
+      {{ macros.m_hr() }}
+
+      
+      {{ macros.info_text('id1', '코드', "macros.setting_input_text_and_buttons('myid2', '결과', [
+      ['mybtn2', '새창에서 열기'], 
+      ['globalOpenBtn', '네이버', 
+        [
+          ['url', 'https://naver.com']
+        ]
+      ],
+      ['mybtn3', '버튼 데이터값 확인', 
+        [
+          ['mykey', 'good']
+        ]
+      ],
+    ],
+    value='https://google.com')") }}
+      {{ macros.setting_input_text_and_buttons('myid2', '결과', [
+        ['mybtn2', '새창에서 열기'], 
+        ['globalOpenBtn', '네이버', 
+          [
+            ['url', 'https://naver.com']
+          ]
+        ],
+        ['mybtn3', '버튼 데이터값 확인', 
+          [
+            ['mykey', 'good']
+          ]
+        ],
+      ],
+      value='https://google.com') }}
+
+      <div class='row'><div class='col-sm-3 set-left'></div><div class='col-sm-9'><div style="padding-left:20px; padding-top:-5px;">
+        클릭 처리 javascript 코드</br>
+        <pre>
+
+          $("body").on('click', '#mybtn2', function(e){
+            e.preventDefault();
+            window.open($("#myid2").val(), target='_blank');
+          });
+          
+          $("body").on('click', '#mybtn3', function(e){
+            e.preventDefault();
+            notify("버튼 데이터 값은 " + $(this).data('mykey') + "입니다");
+          });
+        </pre>
+
+        global로 시작되는 버튼 몇개는 전역함수에서 처리.<br>
+        globalOpenBtn은 data-url 값을 가져와서 새창에서 여는 함수로 data값 설정하면 따로 코딩 불필요.
+      </div></div></div>
+      {{ macros.m_hr() }}
+    {{ macros.m_tab_content_end() }}   
+
+  </div><!--tab-content-->
+</div> <!--전체-->
+
+<script type="text/javascript">
+$("body").on('click', '#mybtn', function(e){
+  e.preventDefault();
+  notify("입력값은 " + $("#myid").val() + "입니다");
+});
+
+$("body").on('click', '#mybtn2', function(e){
+  e.preventDefault();
+  window.open($("#myid2").val(), target='_blank');
+});
+
+$("body").on('click', '#mybtn3', function(e){
+  e.preventDefault();
+  notify("버튼 데이터 값은 " + $(this).data('mykey') + "입니다");
+});
+</script>    
+{% endblock %}

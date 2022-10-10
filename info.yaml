@@ -1,7 +1,7 @@
 title: "샘플 플러그인"
 version: "1.0.0.0"
 package_name: "sample"
-developer: "TEAM"
+developer: "FlaskFarm"
 description: "샘플 플러그인"
 home: "https://github.com/flaskfarm/sample"
 more: "https://raw.githubusercontent.com/flaskfarm/sample/main/README.md"

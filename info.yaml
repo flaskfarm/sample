@@ -1,5 +1,5 @@
 title: "샘플 플러그인"
-version: "1.0.0.0"
+version: "1.0.0"
 package_name: "sample"
 developer: "FlaskFarm"
 description: "샘플 플러그인"

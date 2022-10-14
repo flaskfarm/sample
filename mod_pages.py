@@ -1,4 +1,5 @@
 from .setup import *
+
 name = 'pages'  
 
 class ModulePages(PluginModuleBase):
@@ -6,17 +7,6 @@ class ModulePages(PluginModuleBase):
     def __init__(self, P):
         super(ModulePages, self).__init__(P, name=name, first_menu='page1')
         self.set_page_list([Page1])
-
-    def process_menu(self, page, req):
-        try:
-            if page == 'page1':
-                title = "Page1 : 페이지 단위에서 스케쥴러, socketio 사용"
-                return render_template('sample.html', title=title)
-            return render_template(f'{__package__}_{name}_{page}.html', arg={}) 
-        except Exception as e: 
-            P.logger.error(f'Exception:{str(e)}')
-            P.logger.error(traceback.format_exc())
-            return render_template('sample.html', title=f"{__package__}/{name}/{page}")
 
     def process_command(self, command, arg1, arg2, arg3, req):
         return jsonify('')
@@ -35,22 +25,27 @@ class Page1(PluginPageBase):
         }
         default_route_socketio_page(self)
 
+    def process_menu(self, req):
+        title = "Page1 : 페이지 단위에서 스케쥴러, socketio 사용"
+        return render_template('sample.html', title=title)
+
+
     def process_ajax(self, sub, req):
         pass
 
     def scheduler_function(self):
         data = {'type':'info', 'msg' : "Page1 scheduler_function 함수에서 전달하는 알림입니다."}
-        socketio.emit("notify", data, namespace='/framework', broadcast=True)
+        F.socketio.emit("notify", data, namespace='/framework', broadcast=True)
          
     
     def plugin_load(self):
         def func():
             data = {'type':'info', 'msg' : "Page1 plugin_load 함수에서 전달하는 알림입니다."}
-            socketio.emit("notify", data, namespace='/framework', broadcast=True)
+            F.socketio.emit("notify", data, namespace='/framework', broadcast=True)
 
         threading.Timer(10,func).start()
 
     def plugin_unload(self):
         data = {'type':'info', 'msg' : "Page1 plugin_unload 함수에서 전달하는 알림입니다."}
-        socketio.emit("notify", data, namespace='/framework', broadcast=True)
+        F.socketio.emit("notify", data, namespace='/framework', broadcast=True)
         #time.sleep(10)

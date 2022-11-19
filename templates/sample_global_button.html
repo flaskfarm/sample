@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
+
+
+<script src="{{ url_for('static', filename='js/showdown_2.1.0.js') }}"></script>
+<link href="{{ url_for('static', filename='css/showdown.css') }}" rel="stylesheet">
+<script type="text/javascript">
+  var converter = new showdown.Converter();
+</script>
+
 <div>
   <nav>  
     {{ macros.m_tab_head_start() }}
@@ -7,34 +15,21 @@
       {{ macros.m_tab_head('tab2', 'globalSettingSaveBtn', false) }}
     {{ macros.m_tab_head_end() }}
   </nav>  
-  
+  {{ macros.print_md("aaa", 
+"#111"  
+  )}}
+
   <div class="tab-content" id="nav-tabContent">
     {{ macros.m_tab_content_start('tab1', true) }}
       {{ macros.info_text('id1', 'globalOpenBtn', "data-url 값을 가져와 새로운 창에서 open") }}
-      <div class='row'><div class='col-sm-3 set-left'></div><div class='col-sm-9'><div style="padding-left:20px; padding-top:-5px;">
-        javascript 코드</br>
-        <pre>
+    <div class='row'><div class='col-sm-3 set-left'></div>
+    <div class='col-sm-9'>
 
-          $("body").on('click', '#globalOpenBtn', function(e) {
-            e.preventDefault();
-            url = $(this).data('url')
-            window.open(url, "_blank");
-          });
-        </pre>
-        macro 샘플</br>
-        <pre>
-          macros.info_text_and_buttons('version', '버전', [
-            ['globalOpenBtn', '업데이트 내역', 
-              [('url','https://sjva.me/wiki/public/changelog')]
-            ], 
-            ['recent_version_btn', '최신버전 확인']
-          ])
-        </pre>
-        javascript 샘플</br>
-        <pre>
-          tmp += j_button('globalOpenBtn', 'GIT', [{'key':'url', 'value':current_data[i].info.local_info.home}]);
-        </pre>
-      </div></div></div>
+      
+      {{ macros.print_md("globalOpenBtn_md", arg['globalOpenBtn_md']) }}
+      
+    </div>
+  </div>
 
 
 
@@ -112,7 +107,10 @@
       ],
       value='https://google.com') }}
 
-      <div class='row'><div class='col-sm-3 set-left'></div><div class='col-sm-9'><div style="padding-left:20px; padding-top:-5px;">
+      <div class='row'><div class='col-sm-3 set-left'></div>
+
+      <div class='col-sm-9'><div id="tmp" style="padding-left:20px; padding-top:-5px;">
+
         클릭 처리 javascript 코드</br>
         <pre>
 
@@ -136,7 +134,20 @@
   </div><!--tab-content-->
 </div> <!--전체-->
 
+
+
 <script type="text/javascript">
+
+$(document).ready(function() {
+
+
+});
+
+
+
+
+
+
 $("body").on('click', '#mybtn', function(e){
   e.preventDefault();
   notify("입력값은 " + $("#myid").val() + "입니다");

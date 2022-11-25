@@ -23,6 +23,10 @@ __menu = {
                     'name': 'UI'
                 },
                 {
+                    'uri': 'files/ui_html.md',
+                    'name': 'UI - html'
+                },
+                {
                     'uri': 'files/global_function.md',
                     'name': 'JavaScript - Global Function'
                 }
